@@ -1,1 +1,0 @@
-import{Mo as e}from"./chunk-ZW5N5E5H-C8fDcLjq.js";import{G as t}from"./docs-CtJuZ0WF.js";var n=e();function r(){return(0,n.jsx)(t,{})}export{r as default};

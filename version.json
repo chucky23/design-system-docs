@@ -1,11 +1,11 @@
 {
   "package": {
     "name": "@chucky23/design-system",
-    "version": "6.1.0",
+    "version": "6.2.0",
     "registry": "https://npm.pkg.github.com"
   },
-  "sourceSha": "8d9dc33c192da1130ce71b64c2d299005dee9979",
-  "archiveSha256": "3954ddb14685e00269aa2cac344a451573f393e5a1aa49e93364f6ade9df02e7",
+  "sourceSha": "0234249617544505f0e22d72abffdabc1db9b2bd",
+  "archiveSha256": "8f3f401ff8625b132c12d1d008a44744a88a3343196d64116c3bd08bb6c9d722",
   "routes": [
     "/accessibility",
     "/integrations/milkdown",
@@ -62,6 +62,11 @@
     "/patterns/signal-workspace",
     "/eslint",
     "/example-1",
+    "/screens/registry",
+    "/screens/board",
+    "/screens/document",
+    "/screens/settings",
+    "/screens/overview",
     "/patterns/sprint-operations-target"
   ]
 }
