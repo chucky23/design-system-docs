@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{o as t}from"./index-DiNellwx.js";import{t as n}from"./route-title-Bl1UOUk5.js";var r=e();function i(){return n(),(0,r.jsx)(t,{})}export{i as default};

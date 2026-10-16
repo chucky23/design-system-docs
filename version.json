@@ -1,11 +1,11 @@
 {
   "package": {
     "name": "@chucky23/design-system",
-    "version": "6.2.0",
+    "version": "6.2.1",
     "registry": "https://npm.pkg.github.com"
   },
-  "sourceSha": "0234249617544505f0e22d72abffdabc1db9b2bd",
-  "archiveSha256": "8f3f401ff8625b132c12d1d008a44744a88a3343196d64116c3bd08bb6c9d722",
+  "sourceSha": "6cfad4cbd47e4bfed201f650fa0f3300680a04a9",
+  "archiveSha256": "54080e8535824562dd177667be7bd51d3058994c9932d8b3c6acb57148f36e24",
   "routes": [
     "/accessibility",
     "/integrations/milkdown",
