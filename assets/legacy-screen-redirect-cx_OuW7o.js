@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{F as t}from"./docs-CTQgkcVe.js";import{f as n,m as r}from"./index-CylhoBOX.js";var i=e();function a(){let{screen:e}=r(),{search:a}=n();return(0,i.jsx)(t,{to:`/examples/sprint/${e}${a}`})}export{a as default};
