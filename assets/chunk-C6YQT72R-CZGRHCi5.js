@@ -1,0 +1,1 @@
+var e={1:`var(--chart-1)`,2:`var(--chart-2)`,3:`var(--chart-3)`,other:`var(--chart-other)`,plan:`var(--subtle)`},t=[`1`,`2`,`3`];function n(e){return t[e]??`other`}export{n,e as t};

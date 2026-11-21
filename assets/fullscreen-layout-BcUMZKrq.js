@@ -1,1 +1,0 @@
-import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{l as t}from"./index-CylhoBOX.js";import{t as n}from"./route-title-CRHrtGOj.js";var r=e();function i(){return n(),(0,r.jsx)(t,{})}export{i as default};

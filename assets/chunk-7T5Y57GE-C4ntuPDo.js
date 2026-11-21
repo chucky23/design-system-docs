@@ -1,1 +1,0 @@
-import{a as e,n as t}from"./jsx-runtime-dBoqvwbd.js";var n=e(t(),1);function r(){let[e,t]=n.useState(``),r=n.useRef(null);return n.useEffect(()=>()=>{r.current!==null&&cancelAnimationFrame(r.current)},[]),[e,n.useCallback(e=>{r.current!==null&&cancelAnimationFrame(r.current),t(``),r.current=requestAnimationFrame(()=>{r.current=null,t(e)})},[])]}export{r as t};

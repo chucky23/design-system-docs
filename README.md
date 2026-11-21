@@ -1,5 +1,5 @@
 # Design System documentation
 
-Compiled documentation for @chucky23/design-system@9.1.1.
+Compiled documentation for @chucky23/design-system@11.6.0.
 
 https://chucky23.github.io/design-system-docs/
