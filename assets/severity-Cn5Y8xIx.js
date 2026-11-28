@@ -1,0 +1,11 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{Fn as t,M as n,Ot as r,St as i,br as a,pt as o,rt as s,tn as c}from"./index-DnsCB0LC.js";var l=e();function u(){return(0,l.jsx)(i,{kind:`component`,route:`/recipes/severity`,description:`Плашка уровня серьёзности инцидента SEV-1…SEV-4: цвет привязан к уровню. Бери её для инцидентов и ошибок, а не для статуса задачи.`,example:(0,l.jsxs)(s,{code:`<>
+  <SeverityRecipe level={1} />
+  <SeverityRecipe level={2} />
+  <SeverityRecipe level={3} />
+  <SeverityRecipe level={4} />
+</>`,children:[(0,l.jsx)(a,{level:1}),(0,l.jsx)(a,{level:2}),(0,l.jsx)(a,{level:3}),(0,l.jsx)(a,{level:4})]}),imports:(0,l.jsx)(o,{from:`@chucky23/design-system/recipes/severity`,names:[`SeverityRecipe`]}),usage:(0,l.jsx)(t,{placement:[{screen:{href:`/recipes/meta-cluster`,label:`MetaClusterRecipe`},slot:`children`},{screen:{href:`/screens/shell`,label:`WorkspacePage`},slot:`meta`}],use:[`Уровень инцидента в строке реестра инцидентов.`,`Серьёзность упавшей сборки в шапке страницы инцидента.`],avoid:[{text:`Статус задачи: открыта, в работе, готово.`,instead:{href:`/components/status-tag`,label:`StatusTag`}},{text:`Приоритет задачи P0…P4.`,instead:{href:`/components/workflow-icon`,label:`WorkflowIcon`}}]}),api:(0,l.jsx)(n,{items:[{name:`SeverityRecipe`,props:[{name:`level`,type:`1 | 2 | 3 | 4`,required:!0,description:`Уровень: 1 критический — err, 2 — warn, 3 — info, 4 — secondary.`},{name:`label`,type:`ReactNode`,defaultValue:"`SEV-${level}`",description:`Слово вместо SEV-N для читателей вне дежурной смены. Цвет остаётся по уровню.`}]}]}),related:(0,l.jsx)(r,{links:[{href:`/components/badge`,label:`Badge`,description:`Одиночная плашка без шкалы уровней.`},{href:`/recipes/status`,label:`StatusRecipe`,description:`Состояние задачи значком и словом.`}]}),children:(0,l.jsx)(c,{id:`label`,label:`Свой текст`,description:`Когда шкалу SEV знают не все читатели: подпись словом, цвет по уровню.`,children:(0,l.jsxs)(s,{code:`<>
+  <SeverityRecipe level={1} label="Критический" />
+  <SeverityRecipe level={2} label="Серьёзный" />
+  <SeverityRecipe level={3} label="Умеренный" />
+  <SeverityRecipe level={4} label="Низкий" />
+</>`,children:[(0,l.jsx)(a,{level:1,label:`Критический`}),(0,l.jsx)(a,{level:2,label:`Серьёзный`}),(0,l.jsx)(a,{level:3,label:`Умеренный`}),(0,l.jsx)(a,{level:4,label:`Низкий`})]})})})}export{u as default};

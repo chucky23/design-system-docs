@@ -1,0 +1,33 @@
+import{a as e,n as t,t as n}from"./jsx-runtime-dBoqvwbd.js";import{Lt as r,W as i,at as a}from"./useLabelableId-Ck49MOKz.js";import{g as o}from"./chunk-A5ATJWCD-D5u-P5Xy.js";import{Fn as s,M as c,Ot as l,St as u,pt as d,rt as f,tn as p}from"./index-DnsCB0LC.js";var m=e(t(),1),h=n();function g(){let[e,t]=(0,m.useState)(!0);return(0,h.jsxs)(u,{kind:`component`,route:`/components/toggle`,description:`Кнопка с нажатым состоянием: включает режим и остаётся нажатой, пока режим работает.`,usage:(0,h.jsx)(s,{use:[`Режим, который включается и остаётся включённым: перенос строк, показ скрытых.`,`Кнопка-значок с нажатым состоянием в панели инструментов.`],avoid:[{text:`Выбор одного режима из нескольких.`,instead:{href:`/components/toggle-group`,label:`ToggleGroup`}},{text:`Однократное действие.`,instead:{href:`/components/button`,label:`Button`}},{text:`Настройка в форме или списке настроек.`,instead:{href:`/components/switch`,label:`Switch`}}]}),example:(0,h.jsxs)(f,{code:`<Toggle><EditIcon aria-hidden="true" />Правка</Toggle>
+<Toggle defaultPressed><InfoIcon aria-hidden="true" />Уведомления</Toggle>
+<Toggle variant="outline"><WarningIcon aria-hidden="true" />Только критичные</Toggle>`,gpuiCode:`use anikin_lab_gpui::prelude::*;
+
+let edit = DsToggle::new("edit")
+    .label("Правка")
+    .pressed(false)
+    .on_change(|pressed, _window, _cx| {
+        let _ = pressed;
+    });
+
+let critical = DsToggle::new("critical")
+    .label("Только критичные")
+    .outline(true)
+    .pressed(true)
+    .size(DsSize::Sm);`,children:[(0,h.jsxs)(o,{children:[(0,h.jsx)(i,{"aria-hidden":`true`}),`Правка`]}),(0,h.jsxs)(o,{defaultPressed:!0,children:[(0,h.jsx)(a,{"aria-hidden":`true`}),`Уведомления`]}),(0,h.jsxs)(o,{variant:`outline`,children:[(0,h.jsx)(r,{"aria-hidden":`true`}),`Только критичные`]})]}),imports:(0,h.jsx)(d,{code:`import { Toggle } from "@chucky23/design-system/react"
+import {
+  EditIcon,
+  InfoIcon,
+  WarningIcon,
+} from "@chucky23/design-system/icons"`}),api:(0,h.jsx)(c,{items:[{name:`Toggle`,props:[{name:`variant`,type:`"ghost" | "outline"`,defaultValue:`"ghost"`,description:`Вес кнопки.`},{name:`size`,type:`"sm" | "md" | "lg"`,defaultValue:`"md"`,description:`Высота 20, 24 или 28 px.`},{name:`pressed`,type:`boolean`,description:`Управляемое состояние, вместе с onPressedChange.`},{name:`defaultPressed`,type:`boolean`,defaultValue:`false`,description:`Начальное состояние без управления.`},{name:`onPressedChange`,type:`(pressed: boolean) => void`,description:`Вызывается при смене состояния.`},{name:`disabled`,type:`boolean`,defaultValue:`false`,description:`Отключает кнопку.`}]}]}),related:(0,h.jsx)(l,{links:[{href:`/components/toggle-group`,label:`ToggleGroup`,description:`Один выбранный режим из нескольких.`},{href:`/components/button`,label:`Button`,description:`Действие без состояния.`}]}),children:[(0,h.jsx)(p,{id:`sizes`,label:`Размеры`,description:`Размер берут по соседним кнопкам: 20 px в панели над кодом, 24 px в панели инструментов, 28 px в шапке страницы.`,children:(0,h.jsxs)(f,{code:`<Toggle size="sm">Перенос строк</Toggle>
+<Toggle size="md">Показать скрытые</Toggle>
+<Toggle size="lg">Только мои задачи</Toggle>`,children:[(0,h.jsx)(o,{size:`sm`,children:`Перенос строк`}),(0,h.jsx)(o,{size:`md`,children:`Показать скрытые`}),(0,h.jsx)(o,{size:`lg`,children:`Только мои задачи`})]})}),(0,h.jsx)(p,{id:`controlled`,label:`Управляемое состояние`,description:`Когда режим меняет данные вокруг, например фильтр списка: состояние хранит приложение.`,children:(0,h.jsx)(f,{code:`import { useState } from "react"
+
+function CriticalOnly() {
+  const [critical, setCritical] = useState(true)
+  return (
+    <Toggle variant="outline" pressed={critical} onPressedChange={setCritical}>
+      Только критичные
+    </Toggle>
+  )
+}`,children:(0,h.jsx)(o,{variant:`outline`,pressed:e,onPressedChange:t,children:`Только критичные`})})}),(0,h.jsx)(p,{id:`disabled`,label:`Отключённый`,description:`Когда режим сейчас недоступен, но его положение важно видеть.`,children:(0,h.jsxs)(f,{code:`<Toggle disabled>Правка</Toggle>
+<Toggle defaultPressed disabled>Уведомления</Toggle>`,children:[(0,h.jsx)(o,{disabled:!0,children:`Правка`}),(0,h.jsx)(o,{defaultPressed:!0,disabled:!0,children:`Уведомления`})]})})]})}export{g as default};

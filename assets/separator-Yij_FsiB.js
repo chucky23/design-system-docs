@@ -1,9 +1,0 @@
-import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{A as t,Gt as n,Ut as r,Wt as i,X as a,_t as o,dt as s,rt as c,vn as l}from"./index-BX5CNJVf.js";var u=e();function d(){return(0,u.jsx)(s,{kind:`component`,route:`/components/separator`,description:`Тонкая линия между соседними блоками одной поверхности: горизонтальная в колонке, вертикальная в ряду.`,usage:(0,u.jsx)(l,{use:[`Граница между соседними блоками одной поверхности: группами действий, пунктами меню, колонками ряда.`],avoid:[{text:`Граница между разделами страницы: ритм задают отступы.`,instead:{href:`/patterns/section-stack`,label:`SectionStack`}},{text:`Отдельный блок с рамкой.`,instead:{href:`/components/card`,label:`Card`}}]}),example:(0,u.jsx)(a,{layout:`stack`,code:`<Body>Критичные инциденты</Body>
-<Separator />
-<Body>Закрытые за сегодня</Body>`,children:(0,u.jsx)(n,{})}),imports:(0,u.jsx)(c,{from:`@chucky23/design-system/react`,names:[`Separator`,`Body`]}),api:(0,u.jsx)(t,{items:[{name:`Separator`,props:[{name:`orientation`,type:`"horizontal" | "vertical"`,defaultValue:`"horizontal"`,description:`Горизонтальная линия 1 px на всю ширину или вертикальная 1 px по высоте ряда.`}]}]}),related:(0,u.jsx)(o,{links:[{href:`/recipes/section-header`,label:`SectionHeaderRecipe`,description:`Заголовок раздела с линией.`},{href:`/patterns/section-stack`,label:`SectionStack`,description:`Колонка разделов с ритмом отступов.`}]}),children:(0,u.jsx)(r,{id:`vertical`,label:`Вертикальная`,description:`Когда в одном ряду стоят группы ссылок или действий. Высоту линии задаёт ряд.`,children:(0,u.jsx)(a,{code:`<div className="flex h-5 items-center gap-3">
-  <span>Задачи</span>
-  <Separator orientation="vertical" />
-  <span>Проекты</span>
-  <Separator orientation="vertical" />
-  <span>Метрики</span>
-</div>`,children:(0,u.jsx)(i,{})})})})}export{d as default};

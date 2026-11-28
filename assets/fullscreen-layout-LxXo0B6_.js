@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{i as t}from"./chunk-QFMPRPBF-DmZ5KIb1.js";import{n}from"./route-title-CoagidkD.js";var r=e();function i(){return n(),(0,r.jsx)(t,{})}export{i as default};

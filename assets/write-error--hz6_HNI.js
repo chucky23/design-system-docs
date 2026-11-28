@@ -1,0 +1,20 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{Fn as t,In as n,M as r,Ot as i,St as a,pt as o,rt as s}from"./index-DnsCB0LC.js";var c=e();function l(){return(0,c.jsx)(a,{kind:`component`,route:`/components/write-error`,description:`Отказ записи на месте действия: причина и «Повторить» сразу под полем, строкой или кнопкой, которые писали данные. Ввод остаётся, тост не нужен. Состояние даёт хук useWriteOperation.`,example:(0,c.jsx)(s,{code:`import { useWriteOperation } from "@chucky23/design-system/hooks"
+import { Button, WriteError } from "@chucky23/design-system/react"
+import { WorkspaceQuickCreate } from "@chucky23/design-system/patterns/workspace"
+
+// Хранилище задач приложения: любая запись, которая возвращает Promise.
+declare const store: { createTask: (title: string) => Promise<void>; rename: (id: string, title: string) => Promise<void> }
+
+// Быстрое создание само показывает ожидание, отказ и «Повторить»: onCreate возвращает Promise записи.
+<WorkspaceQuickCreate label="Новая задача" onCreate={title => store.createTask(title)} />
+
+// Своё действие записи — тот же хук и та же строка отказа.
+function Rename({ id, title }: { id: string; title: string }) {
+  const save = useWriteOperation((next: string) => store.rename(id, next))
+  return <>
+    <Button loading={save.pending} onClick={() => void save.run(title)}>Сохранить</Button>
+    {save.status === "error" && <WriteError onRetry={() => void save.retry()}>
+      {save.reason ? \`Не сохранено: \${save.reason}\` : "Не удалось сохранить"}
+    </WriteError>}
+  </>
+}`,children:(0,c.jsx)(n,{})}),imports:(0,c.jsxs)(c.Fragment,{children:[(0,c.jsx)(o,{from:`@chucky23/design-system/react`,names:[`WriteError`]}),(0,c.jsx)(o,{from:`@chucky23/design-system/hooks`,names:[`useWriteOperation`]})]}),usage:(0,c.jsx)(t,{use:[`Действие записало данные, а хранилище отказало: создание, переименование, сохранение поля.`,`Нужно назвать причину и дать повтор там, где остался ввод.`],avoid:[{text:`Данные страницы или раздела не загрузились.`,instead:{href:`/components/error-state`,label:`ErrorState`}},{text:`Значение поля не прошло проверку до записи.`,instead:{href:`/recipes/field`,label:`FieldRecipe`}},{text:`Запись удалась, и её можно отменить.`,instead:{href:`/components/sonner`,label:`Toaster`}}]}),api:(0,c.jsx)(r,{items:[{name:`WriteError`,props:[{name:`children`,type:`ReactNode`,required:!0,description:`Что не записалось и почему: «Задача не создана: хранилище не ответило». Диктор читает текст при появлении.`},{name:`onRetry`,type:`() => void`,description:`«Повторить» в той же строке. Нажатие указателем оставляет фокус в поле. Без него строка только сообщает: так делают, когда рядом уже есть кнопка отправки.`},{name:`retryLabel`,type:`string`,defaultValue:`"Повторить"`,description:`Подпись повтора на языке приложения.`},{name:`messageId`,type:`string`,description:`id текста: поле ссылается на него через aria-describedby.`}]},{name:`useWriteOperation(write)`,props:[{name:`status`,type:`"idle" | "pending" | "error"`,description:`Нет записи, запись ждёт хранилища, хранилище отказало.`},{name:`pending`,type:`boolean`,description:`Для loading кнопки и aria-busy поля.`},{name:`reason`,type:`string | undefined`,description:`Причина отказа: строка, которой отклонён Promise, или message ошибки.`},{name:`run`,type:`(...args) => Promise<"done" | "failed" | "busy">`,description:`Запускает запись. Пока предыдущая идёт, возвращает "busy" и ничего не пишет: повторный Enter не создаёт дубль.`},{name:`retry`,type:`() => Promise<…>`,description:`Повторяет последнюю запись с теми же аргументами.`},{name:`reset`,type:`() => void`,description:`Снимает отказ, например когда пользователь закрыл поле.`}]}]}),related:(0,c.jsx)(i,{links:[{href:`/screens/registry`,label:`Реестр`,description:`WorkspaceQuickCreate в конце списка пишет по тому же паттерну.`},{href:`/screens/board`,label:`Доска`,description:`Черновик карточки колонки: ожидание, отказ и повтор на месте.`},{href:`/components/sonner`,label:`Toaster`,description:`Тост с «Отменить» после успешной обратимой записи.`}]})})}export{l as default};

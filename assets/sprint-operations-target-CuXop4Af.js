@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{Zn as t}from"./index-DnsCB0LC.js";var n=e();function r(){return(0,n.jsx)(t,{})}export{r as default};

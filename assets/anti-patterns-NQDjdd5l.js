@@ -1,0 +1,36 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{l as t}from"./chunk-NA6PDP3U-Cjn5wWWb.js";import{t as n}from"./chunk-RQRM64YP-EonAetHq.js";import{Bt as r,Ot as i,St as a,Vt as o,Wt as s,_n as c,jt as l,rt as u,tn as d,xn as f,z as p}from"./index-DnsCB0LC.js";var m=e();function h(){return(0,m.jsxs)(a,{kind:`overview`,route:`/screens/anti-patterns`,description:`Экран, собранный вручную из компонентов пакета, теряет общую шапку, состояния, переходы и инспектор. Ниже один спринт двумя способами и список замен.`,related:(0,m.jsx)(i,{links:[{href:`/screens`,label:`Как устроен экран`,description:`Уровни экрана и выбор типа.`},{href:`/screens/overview`,label:`Обзор`,description:`Тип экрана для сводки.`},{href:`/screens/registry`,label:`Реестр`,description:`Тип экрана для коллекции.`},{href:`/deprecated`,label:`Устаревшие экспорты`,description:`Что заменяет прежние композиции.`}]}),children:[(0,m.jsxs)(d,{id:`wrong`,label:`Как нельзя`,description:`Каждый блок взят из пакета, но порядок, отступы и состояния решает страница.`,children:[(0,m.jsx)(u,{fragment:!0,layout:`block`,code:`import { Badge, Card, CardAction, CardContent, CardHeader, CardTitle, Table } from "@chucky23/design-system/react"
+import { KpiGrid } from "@chucky23/design-system/patterns/kpi-grid"
+import { MetricRecipe } from "@chucky23/design-system/recipes/metric"
+
+<KpiGrid columns={4} ariaLabel="Показатели спринта">
+  <MetricRecipe label="Открыта" value={2} />
+  <MetricRecipe label="В работе" value={2} />
+</KpiGrid>
+// Карточка с таблицей рядом с метриками: порядок и отступы решает страница.
+<Card>
+  <CardHeader>
+    <CardTitle>Задачи</CardTitle>
+    <CardAction><Badge variant="secondary">{tasks.length}</Badge></CardAction>
+  </CardHeader>
+  <CardContent><Table>…</Table></CardContent>
+</Card>`,children:(0,m.jsxs)(c,{gap:`md`,children:[(0,m.jsxs)(l,{align:`center`,gap:`sm`,children:[(0,m.jsx)(n,{tone:`err`,size:`lg`,"aria-hidden":`true`}),(0,m.jsx)(t,{children:`Нельзя: экран собран вручную`})]}),(0,m.jsx)(r,{})]})}),(0,m.jsx)(f,{label:`Что теряет ручная сборка`,columns:[{label:`Потеря`,width:`16rem`},{label:`Что даёт тип экрана`}],rows:[[`Порядок и отступы у каждого экрана свои`,`Раскладка одна на все экраны типа.`],[`Метрика не ведёт к задачам`,`Карточка с onActivate становится кнопкой и открывает реестр.`],[`У таблицы нет поиска, фильтров и счётчика`,`Панель коллекции, чипы фильтров и инспектор строки.`],[`Загрузка и ошибка не предусмотрены`,`Состояния передаются данными в state.`]]})]}),(0,m.jsxs)(d,{id:`right`,label:`Как нужно`,description:`Тот же спринт из двух типов: сводка и реестр. Метрики нажимаются, строка открывает инспектор.`,children:[(0,m.jsx)(u,{fragment:!0,layout:`block`,title:`Сводка: OverviewWorkspace`,code:`import { OverviewWorkspace } from "@chucky23/design-system/patterns/workspace"
+import { ActivityFeedRecipe } from "@chucky23/design-system/recipes/activity-feed"
+
+<OverviewWorkspace
+  label="Сводка спринта"
+  metrics={[{ id: "blocked", label: "Заблокирована", value: 1, tone: "err", onActivate: openBlocked }]}
+  sections={[{ id: "events", label: "Последние события", content: <ActivityFeedRecipe label="Последние события" layout="timeline" entries={events} /> }]}
+/>`,children:(0,m.jsxs)(c,{gap:`md`,children:[(0,m.jsxs)(l,{align:`center`,gap:`sm`,children:[(0,m.jsx)(n,{tone:`ok`,size:`lg`,"aria-hidden":`true`}),(0,m.jsx)(t,{children:`Так: сводка из типа экрана`})]}),(0,m.jsx)(o,{})]})}),(0,m.jsx)(u,{fragment:!0,layout:`block`,title:`Задачи: RegistryWorkspace`,code:`import { Table } from "@chucky23/design-system/react"
+import { RegistryWorkspace } from "@chucky23/design-system/patterns/workspace"
+
+<RegistryWorkspace
+  label="Задачи"
+  query={query}
+  onQueryChange={setQuery}
+  filters={statusFilter}
+  state={{ kind: "ready", matching: visible.length, total: tasks.length }}
+  empty={empty}
+  inspector={inspector}
+>
+  <Table>…</Table>
+</RegistryWorkspace>`,children:(0,m.jsxs)(c,{gap:`md`,children:[(0,m.jsxs)(l,{align:`center`,gap:`sm`,children:[(0,m.jsx)(n,{tone:`ok`,size:`lg`,"aria-hidden":`true`}),(0,m.jsx)(t,{children:`Так: задачи в реестре`})]}),(0,m.jsx)(s,{})]})})]}),(0,m.jsx)(d,{id:`replacements`,label:`Что на что менять`,description:`Сверь экран со списком перед ревью: слева то, что встречается в ручной сборке.`,children:(0,m.jsx)(f,{label:`Замены ручной композиции`,columns:[{label:`Нельзя`},{label:`Нужно`}],rows:[[(0,m.jsxs)(m.Fragment,{children:[`Экран из `,(0,m.jsx)(p,{children:`div`},`div`),` и utility-классов`]}),(0,m.jsxs)(m.Fragment,{children:[`Один тип экрана внутри `,(0,m.jsx)(p,{children:`WorkspacePage`},`page`)]})],[(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`Card`},`card`),` в слоте типа экрана`]}),`Содержимое слота без поверхности`],[(0,m.jsx)(p,{children:`if (loading) return <Spinner />`},`spinner`),(0,m.jsx)(p,{children:`state={{ kind: "loading", label }}`},`state`)],[(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`<Button>`},`button`),` в шапке страницы`]}),(0,m.jsx)(p,{children:`WorkspacePage.actions`},`actions`)],[(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`<button>`},`button`),` вокруг `,(0,m.jsx)(p,{children:`MetricRecipe`},`metric`)]}),(0,m.jsx)(p,{children:`OverviewMetric.onActivate`},`activate`)],[(0,m.jsxs)(m.Fragment,{children:[`Фильтры в `,(0,m.jsx)(p,{children:`meta`},`meta`),` или `,(0,m.jsx)(p,{children:`toolbar`},`toolbar`)]}),(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`filters`},`filters`),` и `,(0,m.jsx)(p,{children:`activeFilters`},`active`),` типа экрана`]})],[(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`DataTablePattern`},`dt`),` внутри реестра`]}),(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`Table`},`table`),` в `,(0,m.jsx)(p,{children:`children`},`children`),`: поиск, счётчик и состояния уже есть у реестра. `,(0,m.jsx)(p,{children:`DataTablePattern`},`dt`),` — для отдельной таблицы в разделе документа или обзора`]})],[`Сохранение отдельной секции`,(0,m.jsxs)(m.Fragment,{children:[`Одно состояние черновика и `,(0,m.jsx)(p,{children:`WorkspacePage.actions`},`actions`)]})],[(0,m.jsxs)(m.Fragment,{children:[`Ручная навигация на `,(0,m.jsx)(p,{children:`SidebarProvider`},`sidebar`)]}),(0,m.jsxs)(m.Fragment,{children:[(0,m.jsx)(p,{children:`WorkspaceShell`},`shell`),` с `,(0,m.jsx)(p,{children:`groups`},`groups`)]})]]})}),(0,m.jsx)(d,{id:`visual`,label:`Что запрещено в стилях`,description:`Часть запретов ловит ESLint-пресет пакета, остальное проверяй на ревью.`,children:(0,m.jsx)(f,{label:`Запреты в стилях`,columns:[{label:`Нельзя`},{label:`Нужно`}],rows:[[(0,m.jsxs)(m.Fragment,{children:[`Цвета `,(0,m.jsx)(p,{children:`hex`},`hex`),`, `,(0,m.jsx)(p,{children:`rgb`},`rgb`),`, `,(0,m.jsx)(p,{children:`oklch`},`oklch`),` в коде`]}),(0,m.jsxs)(m.Fragment,{children:[`CSS-переменные из `,(0,m.jsx)(p,{children:`tokens.json`},`tokens`)]})],[(0,m.jsx)(p,{children:`box-shadow`},`shadow`),`Рамки и слои поверхностей`],[`Инлайн-стили`,`Пропсы компонентов и токены`],[(0,m.jsxs)(m.Fragment,{children:[`Импорт из `,(0,m.jsx)(p,{children:`@chucky23/design-system/dist`},`dist`)]}),`Публичные подпути пакета`]]})})]})}export{h as default};

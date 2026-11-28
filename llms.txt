@@ -1,0 +1,355 @@
+# Anikin Lab (@chucky23/design-system v12.0.0)
+
+> Дизайн-система для настольных приложений macOS в направлении «Нейтральный Zed»: ахроматическая OKLCh-палитра, бирюзовый акцент, слои поверхностей и рамки без теней (`box-shadow: none`), плотность 20/24/28 px, радиусы 4/6/8 px, SF Pro для интерфейса и SF Mono для кода, ID, дат и клавиш.
+
+- **Композиция экрана (ADR 0001):** каждый экран собирается из `WorkspaceShell` + `WorkspacePage` и одного из пяти типов экрана (`RegistryWorkspace`, `DocumentWorkspace`, `SettingsWorkspace`, `BoardWorkspace`, `OverviewWorkspace`). Ручная вёрстка каркаса запрещена.
+- **Покрытие платформ:** 384 публичных элементов — React full: 384, GPUI (`anikin-lab-gpui`) full: 241, partial: 30.
+- **Подключение CSS:** `@import "@chucky23/design-system/preset.css";` и корневой `<AnikinLabProvider>`. Без хардкода цветов и inline-стилей.
+
+## Канонические точки входа
+
+- `@chucky23/design-system/preset.css`
+- `@chucky23/design-system/react`
+- `@chucky23/design-system/patterns`
+- `@chucky23/design-system/patterns/calendar-grid`
+- `@chucky23/design-system/patterns/form-composer`
+- `@chucky23/design-system/patterns/kpi-grid`
+- `@chucky23/design-system/patterns/status-select`
+- `@chucky23/design-system/patterns/timer-panel`
+- `@chucky23/design-system/patterns/workbench-shell`
+- `@chucky23/design-system/recipes`
+- `@chucky23/design-system/recipes/action-cluster`
+- `@chucky23/design-system/recipes/burndown`
+- `@chucky23/design-system/recipes/chart-area`
+- `@chucky23/design-system/recipes/entity-key`
+- `@chucky23/design-system/recipes/inline-meta`
+- `@chucky23/design-system/recipes/metric`
+- `@chucky23/design-system/surfaces`
+- `@chucky23/design-system/surfaces/board-surface`
+- `@chucky23/design-system/surfaces/sortable-tree`
+- `@chucky23/design-system/surfaces/tree-surface`
+- `@chucky23/design-system/patterns/workspace`
+- `@chucky23/design-system/patterns/board-workspace`
+- `@chucky23/design-system/hooks`
+
+## Начало
+
+Что такое Anikin Lab, как подключить пакет и собрать первый экран.
+
+- [Введение](/)
+- [Установка](/installation): Установи пакет из GitHub Packages, запусти начальную настройку и собери первую страницу. — React: `AnikinLabProvider`, `ThemeProvider`; GPUI (partial): `init`, `ThemeSources`, `Theme::change`, `Theme::sync_system_appearance`
+- [Первый экран](/first-screen): Собери реестр задач на RegistryWorkspace: оболочка, строки, поиск, фильтр, состояния и создание.
+- [Как устроена система](/how-it-works): Композицией экрана владеет пакет: проект выбирает тип экрана и заполняет его слоты доменным содержимым.
+
+## Основы
+
+Из чего сделан внешний вид: принципы и токены, цвет, текст, отступы, движение.
+
+- [Принципы и токены](/foundations)
+- [Цвета](/foundations/colors): Палитра в OKLCh: примитивы задают значения, семантика роль, сигналы принадлежат данным.
+- [Типографика](/foundations/typography): Две системные гарнитуры и шкала от 11 до 48 px: интерфейс набран 13 px, документ 14 px.
+- [Отступы и плотность](/foundations/spacing): Шкала с шагом 4 px и плотность 20/24/28 px: плотные строки внутри разделов, просторные промежутки между ними.
+- [Скругления и рамки](/foundations/radius): Три радиуса по роли поверхности: 4, 6 и 8 px.
+- [Иконки](/foundations/icons): Одна система значков на Hugeicons: сетка 24×24, штрих 1.5, круглые окончания и русская подпись по умолчанию.
+- [Иллюстрации](/foundations/illustrations): Рисунки пауз на языке «Слои и точки»: пустые состояния, ошибки и сцена конца ленты. — React: `EmptyProjectIllustration`, `EmptyListIllustration`, `EmptyBoardIllustration`, `LoadErrorIllustration`, `CrashIllustration`, `FeedEndScene`
+- [Движение](/foundations/motion): Четыре длительности, три пружины и четыре кривые: движение объясняет, что произошло, и не задерживает.
+- [Статусы и приоритеты](/foundations/workflow-tokens): Токены статусов, приоритетов и типов задач: цвет статуса, форма значка и точка типа.
+- [Доступность](/foundations/accessibility): Что система гарантирует с клавиатуры и в контрасте и какая поддержка браузеров и дикторов заявлена.
+
+### Знаки сущностей
+
+- [Обзор знаков](/signs): Знаки проектов, участников и процессов: из чего они собираются и сколько различимых знаков даёт система.
+- [Люди и агенты](/signs/participants): «Фигурка»: все черты людей и роботов, 120 знаков людей и 1440 знаков агентов.
+- [Проекты](/signs/projects): Знак проекта: 28 узоров матрицы 3 × 3 на десять цветов палитры.
+- [Процессы](/signs/processes): «Орбита»: 50 орбит без цвета и в десяти цветах палитры.
+
+## Экраны
+
+С чего начинается любой экран: страничная оболочка, пять типов экрана и готовые примеры.
+
+- [Как устроен экран](/screens)
+- [Чего избегать](/screens/anti-patterns): Экран, собранный вручную из компонентов пакета, теряет общую шапку, состояния, переходы и инспектор.
+- [Нужен новый тип экрана](/screens/new-type): Экран не подходит ни под один из пяти типов: новый тип добавляется в пакет, а не собирается в приложении.
+
+### Страничная оболочка
+
+- [WorkspaceShell и WorkspacePage](/screens/shell): Страничная оболочка: WorkspaceShell держит навигацию и панели окна, WorkspacePage задаёт крошки, заголовок и действия страницы. — React: `WorkspaceShell`, `WorkspaceActions`, `WorkspacePage`; GPUI (partial): `shell_root`
+- [Панели оболочки](/screens/shell-bars): Оболочка окна: вкладки документов, строка состояния, нижний док и быстрое создание. — React: `WorkspaceTabs`, `WorkspaceStatusBar`, `WorkspaceStatusBarSeparator`, `WorkspaceStatusPopover`, `WorkspaceDockToggle`, `WorkspaceBottomDock` (+3); GPUI (partial): `DsStatusBar`, `DsStatusBarItem`, `DsStatusBarSlot`
+
+### Типы экрана
+
+- [Реестр](/screens/registry): RegistryWorkspace: коллекция однотипных записей с поиском, фильтрами, счётчиком, состояниями и инспектором. — React: `RegistryWorkspace`
+- [Документ](/screens/document): DocumentWorkspace: одна сущность с документом, свойствами, связями и обсуждением. — React: `DropZone`, `dispatchExternalDrag`, `DocumentWorkspace`
+- [Конструктор настроек](/screens/settings): SettingsWorkspace: длинная форма с вложенными сущностями и одним состоянием сохранения. — React: `SettingsWorkspace`, `DiagnosticsSummary`
+- [Доска](/screens/board): BoardWorkspace: коллекция по колонкам статуса с переносом карточек мышью и с клавиатуры. — React: `BoardWorkspace`
+- [Обзор](/screens/overview): OverviewWorkspace: сводка с метриками и переходами к реестрам. — React: `OverviewWorkspace`
+
+### Примеры
+
+- [Все примеры](/examples): Готовые экраны приложений на пакете.
+- [Реестр задач](/examples/sprint/registry)
+- [Доска задач](/examples/sprint/board)
+- [Документ задачи](/examples/sprint/document)
+- [Процесс задачи](/examples/sprint/settings)
+- [Обзор спринта](/examples/sprint/overview)
+- [Дерево задач](/examples/tasks/tree)
+- [Холст Chora](/examples/chora/canvas)
+
+## Содержимое слотов
+
+Что класть в слоты типа экрана: панели над списком, строки записей, таблицы и деревья, карточки доски, разделы документа, показатели и графики обзора. Группы идут по месту на экране.
+
+- [Содержимое слотов](/slots)
+
+### Панель над содержимым
+
+- [ToolbarRecipe](/recipes/toolbar): Панель над списком: название, пояснение, действия справа и ряд фильтров. — React: `ToolbarRecipe`; GPUI (full): `DsToolbar`, `DsScopebar`
+- [ActionClusterRecipe](/recipes/action-cluster): Группа команд с общим расстоянием и вторичной подписью справа. — React: `ActionClusterRecipe`; GPUI (full): `DsActionCluster`
+
+### Строка записи
+
+- [EntityRowRecipe](/recipes/entity-row): Строка записи в списке: значок, заголовок, описание, метаданные и действия. — React: `EntityRowRecipe`; GPUI (full): `DsEntityRow`
+- [EntityKeyRecipe](/recipes/entity-key): Ключ записи моноширинным шрифтом и необязательная вторая строка под ним. — React: `EntityKeyRecipe`
+- [InlineMetaRecipe](/recipes/inline-meta): Значение и подпись в одной строке: счётчик задач, комментариев, вложений. — React: `InlineMetaRecipe`
+- [MetaClusterRecipe](/recipes/meta-cluster): Ряд метаданных с переносом: статус, срок, исполнитель, счётчики. — React: `MetaClusterRecipe`
+- [StatusRecipe](/recipes/status): Состояние задачи: значок статуса, подпись и необязательная пояснительная строка. — React: `StatusRecipe`
+- [SeverityRecipe](/recipes/severity): Уровень серьёзности инцидента SEV-1…SEV-4: цвет привязан к уровню. — React: `SeverityRecipe`
+
+### Таблица и дерево
+
+- [DataTablePattern](/patterns/data-table-pattern): Таблица с заголовком, пустым состоянием и подвалом для раздела документа или обзора. В реестр не кладётся. — React: `DataTablePattern`; GPUI (full): `DsDataTable`
+- [SortableTree](/surfaces/sortable-tree): Дерево с переносом узлов по уровням, выбором нескольких строк и переносом с клавиатуры. — React: `SortableTree`, `SortableTreeTitle`
+- [TreeSurface](/surfaces/tree-surface): Дерево произвольных данных: раскрытие и выбор хранит поверхность или приложение, строку рисует renderItem. — React: `TreeSurface`
+- [HierarchyRowRecipe](/recipes/hierarchy-row): Строка дерева: отступ по глубине, переключатель ветки, значок, метаданные и действия. — React: `HierarchyRowRecipe`
+
+### Доска
+
+- [BoardSurface](/surfaces/board-surface): Доска колонок с переносом карточек. — React: `BoardSurface`
+- [BoardCardRecipe](/recipes/board-card): Карточка задачи на доске: заголовок, описание, значок слева, исполнитель справа, признаки и действие внизу. — React: `BoardCardRecipe`
+
+### Документ
+
+- [SectionStack](/patterns/section-stack): Стопка разделов с ровным ритмом внутри слота типа экрана. — React: `SectionStack`; GPUI (full): `DsSectionStack`
+- [SectionHeaderRecipe](/recipes/section-header): Заголовок раздела: метка, название, пояснение и действия справа. — React: `SectionHeaderRecipe`; GPUI (full): `DsSectionHeader`
+- [FieldRecipe](/recipes/field): Поле формы: подпись, подсказка, контрол и ошибка в закреплённом порядке. — React: `FieldRecipe`; GPUI (full): `DsField`
+- [FeedbackRecipe](/recipes/feedback): Сообщение о результате: карточка с сигнальной рамкой или компактная строка в форме. — React: `FeedbackRecipe`; GPUI (full): `DsAlert`, `DsAlertTone`
+- [AttachmentsRecipe](/recipes/attachments): Вложения задачи или комментария: изображения миниатюрами, файлы и ссылки плашками, добавление кнопкой «+». — React: `AttachmentsRecipe`; GPUI (full): `DsAttachment`, `DsAttachmentList`
+- [ActivityFeedRecipe](/recipes/activity-feed): Лента обсуждения или журнала событий. — React: `ActivityFeedRecipe`, `ActivityComposerRecipe`
+- [AgentThreadRecipe](/recipes/agent-thread): Тред с агентом: сообщения, свёрнутые действия инструментов, системные записи и вопрос с вариантами ответа. — React: `AgentThreadRecipe`; GPUI (full): `DsMessage`, `DsMarker`, `DsMessageScroller`
+- [TransitionGateRecipe](/recipes/transition-gate): Шлюз перехода: можно ли перевести задачу дальше. — React: `DisclosureRow`, `EvidenceFormRecipe`, `TransitionGateRecipe`, `ProcessHistoryRecipe`
+- [StatusSelectPattern](/patterns/status-select): Поле смены статуса: переходы грузятся при первом раскрытии, пока идёт смена, выбор заблокирован. — React: `StatusSelectPattern`
+
+### Обзор и графики
+
+- [KpiGrid](/patterns/kpi-grid): Сетка карточек показателей в обзоре: переносится по ширине. — React: `KpiGrid`; GPUI (full): `DsKpiGrid`
+- [MetricRecipe](/recipes/metric): Карточка показателя: метка, крупное значение и необязательные тренд, прогресс, спарклайн и производное значение. — React: `MetricRecipe`; GPUI (full): `DsMetric`
+- [ChartAreaRecipe](/recipes/chart-area): График с областями в карточке: до трёх цветных серий и «Прочее», итоги под графиком. — React: `ChartAreaRecipe`
+- [BurndownChartRecipe](/recipes/burndown): График сгорания спринта: план, факт, прогноз, линия «сегодня» и необязательный лимит. — React: `BurndownChartRecipe`
+- [CalendarGridPattern](/patterns/calendar-grid): Плотная неделя: подпись дня, значение и пометка. — React: `CalendarGridPattern`; GPUI (full): `DsCalendar`, `DsCalendarSpec::month_grid`
+- [TimerPanelPattern](/patterns/timer-panel): Панель таймера: прошедшее время, выбор задачи и пара команд «Старт» и «Стоп». — React: `TimerPanelPattern`
+
+## Компоненты
+
+Примитивы системы по назначению: кнопки, поля, таблицы, окна. Бери их, когда в типе экрана и содержимом слотов нет готового решения.
+
+- [Компоненты](/components)
+- [Варианты и состояния](/variants): Сводный обзор ключевых контролов во всех размерах (20/24/28 px), тонах и состояниях.
+
+### Действия
+
+- [Button](/components/button): Запускает действие. Тон задаёт смысл, вариант — вес на экране. — React: `Button`, `IconButton`; GPUI (full): `DsButton`, `DsIconButton`
+- [ButtonGroup](/components/button-group): Стыкует разнородные контролы — кнопки, Input, Select и разделители — в одну полосу без двойных рамок. — React: `ButtonGroup`, `ButtonGroupSeparator`, `ButtonGroupText`; GPUI (full): `DsButtonGroup`, `DsButtonGroupOrientation`, `DsButtonGroupSeparator`
+- [Command](/components/command): Палитра команд с поиском и навигацией стрелками. — React: `Command`, `CommandFooter`, `CommandDialog`, `CommandInput`, `CommandList`, `CommandEmpty` (+4); GPUI (full): `DsCommand`, `DsCommandDialog`, `DsCommand::placeholder`, `DsCommand::empty_text`, `DsCommandGroup`
+- [ContextMenu](/components/context-menu): Действия над строкой, карточкой или узлом по правой кнопке и Shift+F10. — React: `ContextMenu`, `ContextMenuTrigger`, `ContextMenuContent`, `ContextMenuGroup`, `ContextMenuLabel`, `ContextMenuItem` (+4); GPUI (full): `DsContextMenu`, `DsContextMenuExt`, `DsMenu`, `DsMenu::label`, `DsMenuItem`
+- [CopyButton](/components/copy-button): Копирует текст в буфер обмена и на две секунды показывает значок успеха. — React: `CopyButton`; GPUI (full): `DsCopyButton`
+- [DisclosureButtonGroup](/components/disclosure-button-group): Ряд тихих кнопок с одной открытой панелью под ним. — React: `DisclosureButtonGroup`
+- [DropdownMenu](/components/dropdown-menu): Короткий список действий у кнопки. — React: `DropdownMenu`, `DropdownMenuPortal`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuGroup`, `DropdownMenuLabel` (+9); GPUI (full): `DsMenu`, `DsMenuEntry`, `DsMenuTrigger`, `DsMenu::label`, `DsMenuItem`
+- [KeyHint](/components/key-hint): Подсказка клавиатурного сочетания рядом с действием: значки модификаторов macOS, буквы моноширинным шрифтом. — React: `KeyHint`, `KeyHintMessagesProvider`, `formatKeyShortcut`, `ShortcutScope`, `useShortcut`, `useShortcuts` (+1); GPUI (full): `DsKbd`, `DsKbdVariant`, `format_key_shortcut_localized`
+- [MoveToDialog](/components/move-to-dialog): «Переместить в…»: место назначения поиском вместо перетаскивания. — React: `MoveToDialog`
+- [Toggle](/components/toggle): Кнопка с нажатым состоянием: включает режим и остаётся нажатой, пока режим работает. — React: `Toggle`; GPUI (full): `DsToggle`
+- [ToggleGroup](/components/toggle-group): Сегментированный выбор: один режим из двух–пяти или несколько независимых. — React: `ToggleGroup`, `ToggleGroupItem`; GPUI (full): `DsToggleGroup`, `DsToggleGroupMode`, `DsToggleSpec`
+
+### Поля и выбор
+
+- [Calendar](/components/calendar): Сетка месяца для выбора даты или периода: неделя с понедельника, русские названия. — React: `Calendar`; GPUI (full): `DsCalendar`, `DsCalendarDate`
+- [Checkbox](/components/checkbox): Флажок для выбора с подтверждением: значение применяется кнопкой «Сохранить», а не сразу. — React: `Checkbox`; GPUI (full): `DsCheckbox`, `DsCheckboxState`
+- [DatePicker](/components/date-picker): Выбор даты и периода: DatePicker и DateRangePicker открывают Calendar во всплывающем окне. — React: `DatePicker`, `DateRangePicker`; GPUI (full): `DsDatePicker`, `DsCalendarSelection`, `DsCalendarRange`
+- [ExpandableSearch](/components/expandable-search): Поиск, свёрнутый в лупу: раскрывается в тихое поле в строке заголовка. — React: `ExpandableSearch`; GPUI (full): `DsExpandableSearch`
+- [FieldGroup](/components/field-group): Колонка полей формы и сводка ошибок: проверка при отправке, ошибка под полем, фокус на первой ошибке. — React: `FieldGroup`, `FormErrorSummary`; GPUI (full): `DsFieldGroup`, `DsFormErrorSummary`
+- [FieldHelp](/components/field-help): Справка поля: кнопка «?» рядом с подписью открывает окно с пояснением. — React: `FieldHelp`; GPUI (full): `DsFieldHelp`
+- [FilterPanel](/components/filter-panel): Панель фильтров с группами флажков для таблиц и реестров. — React: `FilterPanel`, `FilterGroup`, `FilterCheckbox`; GPUI (full): `DsFilterPanel`, `DsFilterGroup`, `DsCheckbox`
+- [FormDisclosure](/components/form-disclosure): Сворачиваемая секция дополнительных параметров формы со сводкой текущих значений справа. — React: `FormDisclosure`
+- [Input](/components/input): Однострочное поле ввода: тонкая рамка вместо заливки, кольцо фокуса, сигнальная рамка для проверки значения. — React: `Input`, `InputGroup`, `InputGroupPrefix`, `InputGroupSuffix`; GPUI (full): `DsInputField`, `DsInputGroup`, `DsInputGroup::prefix`, `DsInputGroup::prefix_text`, `DsInputGroup::suffix`
+- [Label](/components/label): Подпись поля: щелчок по ней ставит фокус в связанное поле или переключает флажок. — React: `Label`; GPUI (full): `DsLabel`
+- [RadioGroup](/components/radio-group): Взаимоисключающий выбор одного значения из двух–пяти вариантов. — React: `RadioGroup`, `RadioGroupItem`; GPUI (full): `DsRadioGroup`, `DsRadioItem`
+- [SegmentedControl](/components/segmented-control): Сегментированный выбор одного значения в форме: радио-семантика, равная ширина и высота 20/24/28 px. — React: `SegmentedControl`
+- [Select](/components/select): Выбор значения из списка вариантов: одного или нескольких, с поиском и группами. — React: `Select`, `SelectContent`, `SelectGroup`, `SelectItem`, `SelectLabel`, `SelectScrollDownButton` (+4); GPUI (full): `DsCombobox`, `DsComboboxOption::group`, `DsComboboxOption`, `DsCombobox::max_height`, `DsMenu::separator`
+- [Slider](/components/slider): Ползунок с модификаторами Shift/Alt, сбросом двойным щелчком и точным числовым вводом со scrubbing. — React: `Slider`; GPUI (partial): `DsSlider`
+- [Switch](/components/switch): Переключатель настройки, которая применяется сразу, без кнопки «Сохранить». — React: `Switch`; GPUI (full): `DsSwitch`
+- [Textarea](/components/textarea): Многострочное поле для свободного текста: рамка, радиус и состояния как у Input, высота растёт с текстом. — React: `Textarea`; GPUI (partial): `DsInputField`
+
+### Данные
+
+- [Avatar](/components/avatar): Круглый знак человека или агента: фото, а без него инициалы. — React: `Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarGroup`, `AvatarGroupCount`, `AvatarBadge`; GPUI (full): `DsAvatar`, `DsAvatarSize`, `DsAvatar::from_name`, `DsAvatarGroup`, `DsAvatarGroup::overflow_count`
+- [Chart](/components/chart): График по данным: серии, подсказка и легенда в оформлении системы. — React: `ChartContainer`, `ChartTooltip`, `ChartTooltipContent`, `ChartLegend`, `ChartLegendContent`, `ChartLegendInline` (+1)
+- [CodeBlock](/components/code-block): Блок кода с подсветкой и копированием. — React: `CodeBlock`; GPUI (full): `DsCodeBlock`
+- [Comment](/components/comment): Реплика в обсуждении: аватар, автор, время и текст. — React: `Comment`, `CommentAvatar`, `CommentContent`, `CommentHeader`, `CommentAuthor`, `CommentTimestamp` (+2); GPUI (full): `DsMessage`, `DsMessageRole`, `DsAvatar`, `DsMessageBubble`, `DsMessage::author`
+- [DetailPanel](/components/detail-panel): Панель справа со свойствами сущности: заголовок, кнопка удаления и секции. — React: `PropertyField`, `DetailPanel`, `DetailPanelProperties`, `DetailPanelSection`; GPUI (full): `property_row`, `DsInspector`, `property_list`, `DsInspectorSection`
+- [KanbanBoard](/components/kanban): Колонки по статусам и карточки задач. — React: `KanbanBoard`, `KanbanColumn`, `KanbanCard`, `KanbanCardContent`
+- [Markdown](/components/markdown): Показывает текст документа из Markdown: абзацы, списки, цитаты, код и таблицы. — React: `Markdown`
+- [Pagination](/components/pagination): Подвал таблицы или списка: диапазон записей слева, кнопки предыдущей и следующей страницы справа. — React: `Pagination`, `PaginationStatus`, `PaginationSummary`, `PaginationControls`, `PaginationPrev`, `PaginationNext` (+1); GPUI (full): `DsPagination`, `DsPaginationSummary`, `DsPagination::with_items_summary`, `DsPaginationSpec::can_prev`, `DsPaginationSpec::can_next`
+- [ParticipantAvatar](/components/participant-avatar): Аватар без фото «Фигурка»: человек — голова цвета с лицом, агент — робот с антеннами, всё из имени. — React: `ParticipantAvatar`, `ParticipantAvatarStack`
+- [ProcessSign](/components/process-sign): Знак процесса «Орбита»: плитка и кольцо из шести мест, зажжённых по имени. — React: `ProcessSign`
+- [ProjectSign](/components/project-sign): Знак проекта: плитка цвета проекта и матрица точек из имени. — React: `ProjectSign`
+- [Table](/components/table): Плотная таблица для реестров и мониторинга: записи сравниваются по колонкам. — React: `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow` (+4); GPUI (full): `DsTable`, `DsTableColumn`, `DsTable::rows`, `DsTableSort`, `DsTableRow`
+- [TreeView](/components/tree-view): Иерархический список с раскрытием узлов, клавиатурной навигацией и перестановкой соседей. — React: `TreeView`, `TreeItem`, `TreeRowContent`; GPUI (full): `DsTreeView`, `DsTreeState`, `DsTreeItem`
+- [Typography](/components/typography): Текстовые компоненты: заголовки, абзацы, списки и подписи. — React: `SectionBlock`, `SubsectionHeader`, `EyebrowLabel`, `H1`, `H2`, `H3` (+10); GPUI (full): `section_label`, `DsSectionHeader`, `DsText::meta`, `DsHeading::h1`, `DsHeading::h2`
+
+### Статус и обратная связь
+
+- [AttentionDot](/components/attention-dot): Рука рядом с названием: где-то ждёт твой ход. — React: `AttentionDot`, `AttentionFlash`; GPUI (full): `DsAttentionDot`
+- [Badge](/components/badge): Короткая плашка со счётчиком или категорией. Статус задачи показывает StatusTag. — React: `Badge`; GPUI (full): `DsBadge`, `DsBadgeTone`, `DsBadgeVariant`
+- [EmptyState](/components/empty-state): Объясняет, почему список пуст, и предлагает следующий шаг. — React: `EmptyState`, `EmptyStateIcon`, `EmptyStateIllustration`, `EmptyStateTitle`, `EmptyStateDescription`, `EmptyStateAction`; GPUI (full): `DsEmptyState`, `DsEmptyState::icon`, `DsEmptyState::new`, `DsEmptyState::description`, `DsEmptyState::action`
+- [ErrorState](/components/error-state): Говорит, что данные не загрузились, и даёт повторить. — React: `ErrorState`, `ErrorStateIcon`, `ErrorStateIllustration`, `ErrorStateTitle`, `ErrorStateDescription`, `ErrorStateAction`; GPUI (full): `DsErrorState`, `DsErrorState::icon`, `DsErrorState::new`, `DsErrorState::description`, `DsErrorState::action`
+- [Progress](/components/progress): Линейный индикатор для операции с известным процентом: загрузка, квота, ёмкость. — React: `Progress`; GPUI (partial): `DsProgress`, `DsProgressMode`, `DsProgressSegment`
+- [SignalIcon](/components/signal-icon): Значок диагностического сигнала: норма, предупреждение, ошибка или сведения. — React: `SignalIcon`; GPUI (full): `DsSignalIcon`, `DsSignalKind`
+- [Skeleton](/components/skeleton): Заглушка вместо контента с известной формой. — React: `Skeleton`; GPUI (full): `DsSkeleton`, `DsSkeletonShape`
+- [Spinner](/components/spinner): Кольцо с дугой для загрузки без известной формы. — React: `Spinner`; GPUI (full): `DsSpinner`
+- [StatusTag](/components/status-tag): Статус задачи: значок и слово. Один вид статуса на всех экранах. — React: `StatusTag`; GPUI (full): `DsStatusTag`
+- [Tag](/components/tag): Метка для произвольного признака: цвет задаёт смысл, variant — вес. — React: `Tag`, `TagGroup`; GPUI (full): `DsTag`, `DsTagGroup`
+- [Toaster](/components/sonner): Тосты о результате операции: сохранено, не удалось, готово. — React: `toastIcons`, `Toaster`; GPUI (full): `ToastTone`, `DsToastQueue`
+- [WorkflowIcon](/components/workflow-icon): Значок статуса задачи: кольцо и знак внутри. — React: `WorkflowIcon`, `WorkflowIconMessagesProvider`
+- [WriteError](/components/write-error): Отказ записи на месте действия: причина и «Повторить» под полем, ввод остаётся. — React: `WriteError`
+
+### Всплывающие окна
+
+- [AlertDialog](/components/alert-dialog): Подтверждение опасного действия: удаления или другого необратимого шага. — React: `AlertDialog`, `AlertDialogTrigger`, `AlertDialogContent`, `AlertDialogHeader`, `AlertDialogFooter`, `AlertDialogTitle` (+3); GPUI (full): `DsAlertDialog`, `DsAlertDialog::mount`, `DsAlertDialog::body`, `DsAlertDialog::new`, `DsAlertDialog::description`
+- [Dialog](/components/dialog): Модальное окно для формы или короткой задачи. — React: `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogSubheader`, `DialogBody` (+5); GPUI (full): `DsDialog`, `DsDialogHost::mount`, `DsDialogHost`, `DsDialog::new`, `DsDialog::description`
+- [Drawer](/components/drawer): Выдвижная панель для временной формы или подтверждения: закрывается Escape или кнопкой. — React: `Drawer`, `DrawerPortal`, `DrawerOverlay`, `DrawerTrigger`, `DrawerClose`, `DrawerContent` (+4); GPUI (full): `DsSheet`, `DsSheetSide`, `DsSheetHost`, `DsSheet::overlay`, `DsSheetHost::mount`
+- [Popover](/components/popover): Небольшое окно у элемента: поле, список или пояснение без перехода и без затемнения страницы. — React: `Popover`, `PopoverTrigger`, `PopoverContent`, `PopoverClose`; GPUI (full): `DsPopover`, `DsPopover::trigger`, `DsPopover::content`, `PopoverState::dismiss`
+- [Sheet](/components/sheet): Панель у края окна для формы или задачи вне коллекции. — React: `Sheet`, `SheetTrigger`, `SheetClose`, `SheetContent`, `SheetHeader`, `SheetFooter` (+2); GPUI (full): `DsSheet`, `DsSheetSide`, `DsSheetHost::mount`, `DsSheetHost::close`, `DsSheet::body`
+- [Tooltip](/components/tooltip): Короткая подсказка к кнопке-значку или сокращённой подписи. — React: `Tooltip`, `TooltipTrigger`, `TooltipContent`, `TooltipProvider`; GPUI (full): `DsTooltip`, `DsTooltip::build`, `DsTooltip::new`, `DsTooltip::shortcut`
+
+### Раскладка и навигация
+
+- [Accordion](/components/accordion): Группа сворачиваемых секций со сводкой закрытого состояния и действиями в заголовке. — React: `Accordion`, `AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionContent`; GPUI (full): `DsAccordion`, `DsAccordionMode`, `DsAccordionItem`, `DsAccordionItem::new`, `DsAccordionItem::summary`
+- [Breadcrumb](/components/breadcrumb): Показывает путь от корня до текущей страницы. — React: `Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator` (+1); GPUI (full): `DsBreadcrumb`, `DsBreadcrumbItem`, `DsBreadcrumbItem::new`, `DsBreadcrumb::on_select`, `DsBreadcrumbItem::current`
+- [Card](/components/card): Контейнер связанного содержимого: шапка, тело, подвал. — React: `Card`, `CardHeader`, `CardFooter`, `CardTitle`, `CardAction`, `CardDescription` (+1); GPUI (full): `DsCard`, `DsCardTone`, `DsCardDensity`
+- [Collapsible](/components/collapsible): Скрывает детали до запроса: триггер раскрывает и сворачивает панель. — React: `Collapsible`, `CollapsibleTrigger`, `CollapsibleContent`; GPUI (full): `DsCollapsible`, `DsCollapsible::on_toggle`
+- [MessageScroller](/components/message-scroller): Автопрокрутка ленты сообщений с паузой при чтении истории и кнопкой «К новым сообщениям». — React: `MessageScroller`; GPUI (full): `DsMessageScroller`, `DsMessageScrollerState`
+- [Resizable](/components/resizable): Панели с перетаскиваемым разделителем: пользователь сам решает, что важнее сейчас — список или деталь. — React: `ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`; GPUI (full): `DsResizableGroup`, `DsResizableAxis`, `DsResizableState`, `DsResizablePanel`, `DsResizableHandle`
+- [ScrollArea](/components/scroll-area): Контейнер с прокруткой по одной или двум осям. — React: `ScrollArea`; GPUI (full): `DsScrollArea`
+- [Separator](/components/separator): Тонкая линия цвета рамки между соседними блоками: горизонтальная в колонке, вертикальная в ряду. — React: `Separator`; GPUI (full): `DsSeparator`, `DsSeparatorOrientation`
+- [Sidebar](/components/sidebar): Боковая панель из семейства частей: провайдер хранит состояние, группы и меню собирают пункты. — React: `Sidebar`, `SidebarContent`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupAction`, `SidebarGroupContent` (+18); GPUI (full): `DsSidebar`, `DsSidebar::scrollable`, `DsSidebar::footer`, `DsSidebarGroup`, `DsSidebarGroup::items`
+- [Tabs](/components/tabs): Вкладки переключают панели внутри экрана. — React: `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`, `TabsIndicator`; GPUI (full): `DsTabs`, `DsTabItem`, `DsTabsContent`, `DsTabs::with_content`, `DsTabsVariant`
+- [ThemeToggle](/components/theme-toggle): Переключает светлую и тёмную тему. — React: `ThemeToggle`; GPUI (full): `DsThemeToggle`
+
+## Приложения
+
+Приложения семейства: чем каждое отличается и какие блоки добавляет в пакет.
+
+- [Приложения](/apps)
+- [Tasks](/apps/tasks)
+- [Chora](/apps/chora)
+- [AI Library](/apps/ai-library)
+- [Sprint](/apps/sprint)
+
+### Блоки Tasks
+
+- [Строка и карточка задачи](/recipes/task-row-and-card): Отметка «чей ход», строка дерева и карточка доски Tasks: содержимое слотов SortableTree и доски. — React: `AttentionMark`
+
+### Блоки Chora
+
+- [Знаки холста](/components/canvas-signs): 26 знаков ядра одной гарнитуры и символы точечных типов холста Chora: геометрия совпадает с веб-эталоном, окраска идёт токенами chora. — React: `ChoraSign`, `ChoraPointSymbol`
+- [Карточки холста](/components/canvas-cards): 25 типов сущностей холста Chora в девяти семействах на четырёх уровнях детализации: один каркас, ядро в одном углу, тип читается по силуэту и знаку. — React: `ChoraCard`; GPUI (partial): `render_card`
+- [Сцена холста](/surfaces/canvas-scene): Холст Chora целиком: камера, точечная сетка, фреймы, дочерние доски, связи и карточки. — React: `ChoraFrame`, `ChoraChildBoard`, `ChoraScene`, `ChoraThemeLegend`; GPUI (partial): `render_frame`, `render_board`, `animate_fit_all`
+- [Слой связей холста](/surfaces/canvas-links): Шесть типов связей холста Chora: штрих и наконечник читаются без цвета, выбор проявляет окрестность волной по графу. — React: `ChoraLink`, `ChoraLinkLayer`, `ChoraDraftLink`, `ChoraLinkGlyph`; GPUI (partial): `render_prepared_link_curve`, `distribute_endpoint_assignments`, `LivePreview`
+
+### Блоки AI Library
+
+- [Диагностика связей](/components/relation-diagnostics): Строка связи сущности со знаками «Обязан вызвать» и «Найдено в тексте» и блоки диагностики связей. — React: `RelationRow`, `RelationDiagnostics`, `RelationDiagnosticGroup`, `RelationDiagnosticCard`, `RelationBlockingDiagnostic`, `RelationBrokenLinks` (+1)
+
+## Справочник
+
+Проверка проекта, интеграции, журнал изменений, переход на новую версию и устаревшие экспорты.
+
+- [Справочник](/reference)
+- [Покрытие платформ](/platform-support): Сводка поддержки всех элементов системы в React и нативном GPUI-crate.
+- [ESLint и проверка проекта](/eslint): Пресет ESLint входит в пакет и переносит правила системы в редактор.
+- [Правила для агентов](/agent-rules): Матрица выбора документов for-ai/ по задаче, полный каталог правил и защитный контур chucky-ds-rules.
+- [Milkdown](/integrations/milkdown): Необязательный адаптер редактора: внешний вид задаёт пакет, данные и сохранение остаются у приложения.
+- [Журнал изменений](/changelog): Что менялось в пакете от выпуска к выпуску: новое, изменённое, устаревшее и исправленное.
+- [Переход на 11.x](/migration): Удалённое в 11.0.0, замена устаревшего и изменённое поведение.
+- [Устаревшие экспорты](/deprecated): Экспорты с пометкой @deprecated и их замены. — React: `PageHeader`, `PageMain`, `StatusIcon`, `Page`, `Toolbar`, `MetricCard` (+9)
+
+### Документы for-ai
+
+- [Точка входа навыка потребителя](/agent-rules/skill): Порядок выбора слоя, типы экрана, обязательные правила, карта компонентов и защитный контур.
+- [Контракт публичных импортов](/agent-rules/exports): Полный реестр публичных точек входа, CSS-подключения, CSP nonce, ./testing и rules-index.json.
+- [Композиция форм и диалогов](/agent-rules/form-composition): Матрица выбора контролов и раскладки, инварианты высот, разделителей, placeholder и запрета CSS-хаков.
+- [Паттерн формы создания](/agent-rules/create-form): Отправка формы в управляемом Dialog, валидация при submit, фокус первой ошибки и FeedbackRecipe.
+- [Паттерн модального диалога](/agent-rules/dialog): Управляемый Dialog, DialogSubheader/DialogBody, встроенное закрытие, ref, анимация и доступность.
+- [Страничная оболочка и типы экрана](/agent-rules/workspace): WorkspaceShell, WorkspacePage, Registry/Document/Settings/Board/OverviewWorkspace, хром и перенос файлов.
+- [Паттерн таблиц и списков](/agent-rules/data-table): Table, TableColgroup, перенос текста, числовые и моноширинные колонки, статусы и теги в строках.
+- [Состояния загрузки, пустоты и ошибок](/agent-rules/states): Данные state/empty/noResults внутри типов экрана и Spinner, Skeleton, EmptyState, ErrorState вне них.
+- [Метрики и полоса KPI](/agent-rules/signal-metric): MetricRecipe и KpiGrid: закрытый цветовой контракт, один сигнал на сетку, detail против progress.
+- [Графики и диаграммы](/agent-rules/chart): BurndownChartRecipe, ChartAreaRecipe и ограничения на ChartContainer / recharts.
+- [Индикаторы прогресса](/agent-rules/progress): Progress bar, ticks и Progress.Segmented для шкал выполнения.
+- [Основы: Нейтральный Zed](/agent-rules/foundations): Фирменный стиль, ахроматическая палитра, бирюзовый акцент, плотность и границы пакета.
+- [Раскладка, отступы, рамки и className](/agent-rules/layout): Шкала отступов 4 px, оси, радиусы 2/4/6/8 px, высоты 20/24/28 px, цели указателя WCAG 2.5.8 и правила className.
+- [Правила цвета и выделения](/agent-rules/color): OKLCh семантические токены, правило выделения состояний, сигналы, графики и контраст.
+- [Типографика и шрифтовая шкала](/agent-rules/typography): SF Pro для интерфейса (13 px) и документа (14 px), SF Mono только для кода/ID/дат/клавиш, tabular-nums.
+- [Дизайн-токены web и GPUI](/agent-rules/tokens): Источник tokens.json, генерация CSS/TS/GPUI JSON, устаревшие токены и правила переопределения.
+- [Движение и reduced motion](/agent-rules/motion): Токены длительности и кривых, поддержка prefers-reduced-motion и границы анимаций.
+- [Иконография](/agent-rules/iconography): Hugeicons Stroke Rounded 1.5, семантические алиасы, шкала 12/14/16/24 px и запрет сторонних наборов.
+- [Каталог семантических иконок](/agent-rules/icons): Полный справочник алиасов @chucky23/design-system/icons.
+- [Тон текста и копирайт](/agent-rules/content-tone): Русская терминология, обращение на «ты», краткие подписи, JSDoc и сообщения ошибок.
+- [Компоненты: формы и поля](/agent-rules/components-forms): Компактный справочник FieldGroup, FieldRecipe, SegmentedControl, FormDisclosure, Input, Select, Switch, Checkbox, RadioGroup и валидации.
+- [Компоненты: оверлеи, диалоги и меню](/agent-rules/components-overlays): Компактный справочник Dialog (size, anchor="top"), DialogSplit, AlertDialog, Sheet, Drawer, DropdownMenu, ContextMenu, MoveToDialog, Command.
+- [Компоненты: действия и сочетания клавиш](/agent-rules/components-actions): Компактный справочник Button, IconButton, Toggle, ToggleGroup, ButtonGroup, KeyHint, useShortcut и WebKit tab-stop.
+- [Компоненты: данные, таблицы, деревья и графики](/agent-rules/components-data): Компактный справочник Table, SortableTree, BoardWorkspace, MetricRecipe, графиков, лент и рецептов сущностей.
+- [Компоненты: обратная связь, статусы и знаки](/agent-rules/components-feedback): Компактный справочник StatusTag vs Badge vs Tag, состояний, FeedbackRecipe, WriteError, Sonner и иллюстраций.
+- [Компоненты: навигация, контейнеры и оболочка](/agent-rules/components-navigation-layout): Компактный справочник Card, SectionBlock, Accordion, ScrollArea, Tabs, хрома WorkspaceShell, типографики и data-slot.
+- [Полный каталог компонентов (индекс)](/agent-rules/components): Полная сводная таблица всех публичных компонентов, рецептов, паттернов, блоков приложений и CVA-вариантов.
+- [Каталог публичных хуков](/agent-rules/hooks): Защита черновиков (DraftProtectionProvider, useDraftProtection, useGuardedTransition), фокус ошибок и useWriteOperation.
+- [Интеграция Milkdown Crepe](/agent-rules/milkdown): Подключение @chucky23/design-system/integrations/milkdown и milkdown.css, жизненный цикл редактора.
+- [UX-контракт экранов и ds:ux](/agent-rules/ux): Выбор типа экрана, changePolicies (draft/staged/immediate), клавиатура, перетаскивание и design-system.ux.json.
+- [Пресет ESLint, CSS-аудит и тестирование](/agent-rules/eslint): Правила @chucky23/ds, пресеты recommended/strict, локальные UI-баррели, CSS-сканер и @chucky23/design-system/testing.
+- [Стандарт JSDoc для компонентов](/agent-rules/jsdoc): Оформление JSDoc, @remarks, @example и пропсов для публичных экспортов пакета.
+- [Приложение Tasks](/agent-rules/app-tasks): Доменные отличия и блоки @chucky23/design-system/apps/tasks.
+- [Приложение Chora (GPUI)](/agent-rules/app-chora): Нативная платформа Rust + GPUI, токены холста Chora и блоки apps/chora.
+- [Приложение ai-library](/agent-rules/app-ai-library): Доменные отличия и блоки @chucky23/design-system/apps/ai-library.
+- [Приложение Sprint](/agent-rules/app-sprint): Доменные отличия и спринтовые паттерны приложения Sprint.
+
+## Семантический контракт (ориентиры для агентов)
+
+- **platformSetup** (`@chucky23/design-system/react`, closed/recommended): `AnikinLabProvider` — Подключай AnikinLabProvider и preset.css до ручной настройки theme.css/tailwind.css/fonts.css. При CSP с nonce в style-src, например в Tauri, передай nonce через проп AnikinLabProvider nonce.
+- **productPatterns** (`@chucky23/design-system/patterns`, closed/recommended): `StatusTag` — Используй StatusTag для статуса сущности в meta страницы или панели документа до ручной сборки status tags. Page, Toolbar и MetricCard устарели и вынесены в legacyProductPatterns: страницу собирай из WorkspaceShell и WorkspacePage с одним типом экрана.
+- **states** (`@chucky23/design-system/react`, closed/supported): `Spinner`, `Skeleton`, `EmptyState`, `ErrorState` — Используй DS state components для loading, empty и error до кастомной fallback-разметки.
+- **actionControls** (`@chucky23/design-system/react`, escape-hatch/supported): `Button`, `IconButton`, `CopyButton`, `Toggle` — Используй Button для текстовых действий, IconButton label для действий только с иконкой, CopyButton для копирования текста и Toggle для pressed-state до raw button.
+- **metrics** (`@chucky23/design-system/recipes`, closed/recommended): `MetricRecipe` — Используй MetricRecipe для KPI-карточки и KpiGrid для групп до ручной сборки Card signal metrics.
+- **charts** (`@chucky23/design-system/recipes`, closed/recommended): `BurndownChartRecipe`, `ChartAreaRecipe` — Используй BurndownChartRecipe для burn-down и ChartAreaRecipe для area charts до низкоуровневой ChartContainer/Recharts-композиции.
+- **statusSelect** (`@chucky23/design-system/patterns`, closed/recommended): `StatusSelectPattern` — Используй StatusSelectPattern для async status transitions до кастомных Select/Popover state machines.
+- **sprintConsoleRecipes** (`@chucky23/design-system/recipes`, hybrid/supported): `EntityKeyRecipe`, `InlineMetaRecipe`, `ActionClusterRecipe` — Используй EntityKeyRecipe, InlineMetaRecipe и ActionClusterRecipe до ручной сборки entity title, inline counters и action/meta rows.
+- **calendarGrid** (`@chucky23/design-system/patterns`, hybrid/supported): `CalendarGridPattern` — Используй CalendarGridPattern для Sprint-календарей с динамической длиной до ручной сборки grid/list day blocks.
+- **timerPanel** (`@chucky23/design-system/patterns`, hybrid/supported): `TimerPanelPattern` — Используй TimerPanelPattern для локального Sprint-таймера до ручной сборки panel, REC state, elapsed text и action cluster.
+- **sprintConsolePatterns** (`@chucky23/design-system/patterns`, hybrid/recommended): `FormComposerPattern`, `CalendarGridPattern`, `TimerPanelPattern`, `WorkbenchShellPattern` — Используй CalendarGridPattern и TimerPanelPattern внутри слотов типа экрана для календарных сеток и локального таймера до CSS проекта. FormComposerPattern и WorkbenchShellPattern устарели: форму страницы задаёт SettingsWorkspace, оболочку — WorkspaceShell и WorkspacePage.
+- **surfaces** (`@chucky23/design-system/surfaces`, escape-hatch/supported): `BoardSurface`, `TreeSurface` — Используй Card, BoardSurface и TreeSurface до raw rounded/bordered div pseudo-surfaces.
+- **boardCard** (`@chucky23/design-system/recipes/board-card`, escape-hatch/supported): `BoardCardRecipe` — Используй BoardCardRecipe для карточек на доске до ручной композиции Card + drag affordances.
+- **entityRow** (`@chucky23/design-system/recipes/entity-row`, escape-hatch/supported): `EntityRowRecipe` — Используй EntityRowRecipe для строк registry/list с identity-блоком до ручного flexbox + Avatar.
+- **feedback** (`@chucky23/design-system/recipes/feedback`, escape-hatch/supported): `FeedbackRecipe` — Используй FeedbackRecipe для feedback-карточек до ручной композиции Card + signal styling.
+- **formField** (`@chucky23/design-system/recipes/field`, hybrid/supported): `FieldRecipe` — Используй FieldRecipe для form fields до ручной композиции Label + Input + helper text; для строк «подпись слева — контрол справа» используй layout="horizontal"; связывай label и control через htmlFor или labelId.
+- **hierarchyRow** (`@chucky23/design-system/recipes/hierarchy-row`, escape-hatch/supported): `HierarchyRowRecipe` — Используй HierarchyRowRecipe для строк tree/outline до ручного indent + ToggleGroup.
+- **metaCluster** (`@chucky23/design-system/recipes/meta-cluster`, escape-hatch/supported): `MetaClusterRecipe` — Используй MetaClusterRecipe для кластера дат/авторов до ручного flex-row с MutedText.
+- **sectionHeader** (`@chucky23/design-system/recipes/section-header`, escape-hatch/supported): `SectionHeaderRecipe` — Используй SectionHeaderRecipe для заголовков секций до ручного flex с Heading + actions.
+- **severity** (`@chucky23/design-system/recipes/severity`, escape-hatch/supported): `SeverityRecipe` — Используй SeverityRecipe для SEV-level badges до ручного подбора Badge variant.
+- **status** (`@chucky23/design-system/recipes/status`, escape-hatch/supported): `StatusRecipe` — Используй StatusRecipe для статус-индикатора до ручного Badge с тонами.
+- **toolbar** (`@chucky23/design-system/recipes/toolbar`, escape-hatch/supported): `ToolbarRecipe` — Используй ToolbarRecipe для filter/action bars до ручной flex-композиции с разделителями.
+- **dataTable** (`@chucky23/design-system/patterns/data-table-pattern`, hybrid/supported): `DataTablePattern` — Используй DataTablePattern для табличных регистров до ручной композиции Table + сортировка/фильтры.
+- **sectionStack** (`@chucky23/design-system/patterns/section-stack`, hybrid/supported): `SectionStack` — Используй SectionStack для группы секций с заголовками до ручного gap + headings.
+- **signalWorkspace** (`@chucky23/design-system/patterns/workspace`, hybrid/recommended): `WorkspaceShell`, `WorkspacePage`, `WorkspaceActions`, `DocumentWorkspace`, `RegistryWorkspace`, `SettingsWorkspace`, `OverviewWorkspace`, `DiagnosticsSummary` — Package-owned Neutral Zed UI («Нейтральный Zed») with calm document-first UX; explicit domain slots and controlled states. WorkspaceShell owns navigation; UX selection does not change brand. Read UX policies before implementation.
+- **boardWorkspace** (`@chucky23/design-system/patterns/board-workspace`, hybrid/recommended): `BoardWorkspace` — Тип экрана «доска»: панель коллекции та же, что у реестра; колонки, рамку карточки, перенос мышью и с клавиатуры и объявления задаёт пакет. Проект передаёт содержимое карточки и применяет BoardMove в onMove. Требует @dnd-kit.
+- **sortableTree** (`@chucky23/design-system/surfaces/sortable-tree`, hybrid/recommended): `SortableTree`, `SortableTreeTitle` — Дерево с перетаскиванием — вид реестра «Дерево» в слоте результатов RegistryWorkspace. Геометрию строки, перенос мышью и с клавиатуры, окно строк и объявления задаёт пакет; проект передаёт содержимое строки, название в нём — SortableTreeTitle, и применяет TreeMove в onMove. Требует @dnd-kit.
+- **activityFeed** (`@chucky23/design-system/recipes/activity-feed`, closed/supported): `ActivityFeedRecipe` — Лента обсуждения или событий: записи передаются данными (author, time, content), раскладку задаёт пакет. Используй в activity документа и в разделах обзора вместо своей вёрстки списка.
+- **formComposition** (`@chucky23/design-system/react`, closed/recommended): `SegmentedControl`, `FormDisclosure`, `DialogSplit` — Используй SegmentedControl для 2–4 взаимоисключающих вариантов в формах, FormDisclosure для прогрессивного раскрытия второстепенных секций и DialogSplit для двухколоночных диалогов форма + предпросмотр до ручных CSS-сеток и слотовых оверрайдов.
+- **draftProtection** (`@chucky23/design-system/hooks`, closed/recommended): `DraftProtectionProvider`, `useDraftProtection`, `useGuardedTransition`, `useTransitionBlocker`, `useExitProtectionController` — Protect drafts with required revision and guarded transitions. Router/native/persistence remain caller adapters.

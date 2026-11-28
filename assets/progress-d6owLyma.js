@@ -1,0 +1,29 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{it as t}from"./chunk-NA6PDP3U-Cjn5wWWb.js";import{Fn as n,M as r,Ot as i,St as a,pt as o,rt as s,tn as c}from"./index-DnsCB0LC.js";var l=e(),u=`"ok" | "warn" | "err" | "info"`;function d(){return(0,l.jsxs)(a,{kind:`component`,route:`/components/progress`,description:`Линейный индикатор для операции с известной долей: загрузка, квота, ёмкость. Сигнал заливки показывает итог проверки, а не статус задачи.`,usage:(0,l.jsx)(n,{use:[`Операция с известным процентом: загрузка файла, квота, заполненность.`],avoid:[{text:`Ожидание без известной доли.`,instead:{href:`/components/spinner`,label:`Spinner`}},{text:`Загрузка содержимого с известной формой.`,instead:{href:`/components/skeleton`,label:`Skeleton`}}]}),example:(0,l.jsxs)(s,{layout:`stack`,code:`<Progress value={72} aria-label="Загрузка отчёта" />
+<Progress value={40} signal="ok" aria-label="Тесты прошли" />
+<Progress value={80} signal="warn" aria-label="Квота хранилища" />
+<Progress value={90} signal="err" aria-label="Бюджет ошибок" />
+<Progress value={55} signal="info" aria-label="Индексация" />`,gpuiCode:`use anikin_lab_gpui::prelude::*;
+
+let upload = DsProgress::linear(72.0, 100.0)
+    .label("Загрузка отчёта")
+    .show_percentage(true);
+let tests = DsProgress::linear(40.0, 100.0)
+    .tone(DsProgressTone::Success);
+let segmented = DsProgress::segmented(
+    34.0,
+    vec![
+        DsProgressSegment::new("Прошли", 18.0, DsProgressTone::Success),
+        DsProgressSegment::new("Нестабильны", 7.0, DsProgressTone::Warning),
+        DsProgressSegment::new("Упали", 2.0, DsProgressTone::Danger),
+    ],
+);`,children:[(0,l.jsx)(t,{value:72,"aria-label":`Загрузка отчёта`}),(0,l.jsx)(t,{value:40,signal:`ok`,"aria-label":`Тесты прошли`}),(0,l.jsx)(t,{value:80,signal:`warn`,"aria-label":`Квота хранилища`}),(0,l.jsx)(t,{value:90,signal:`err`,"aria-label":`Бюджет ошибок`}),(0,l.jsx)(t,{value:55,signal:`info`,"aria-label":`Индексация`})]}),imports:(0,l.jsx)(o,{from:`@chucky23/design-system/react`,names:[`Progress`]}),api:(0,l.jsx)(r,{items:[{name:`Progress`,props:[{name:`value`,type:`number`,required:!0,description:`Текущее значение. Часть сверх max красится signal-err.`},{name:`max`,type:`number`,defaultValue:`100`,description:`Верхняя граница шкалы.`},{name:`signal`,type:u,description:`Тон заливки. Без значения заливка нейтральная.`},{name:`size`,type:`"sm" | "default" | "lg"`,defaultValue:`"sm"`,description:`Высота трека 4, 6 или 8 px.`},{name:`variant`,type:`"bar" | "ticks"`,defaultValue:`"bar"`,description:`Сплошной трек или десять делений.`},{name:`aria-label`,type:`string`,description:`Имя индикатора. Обязательно, если нет aria-labelledby.`}]},{name:`Progress.Segmented`,props:[{name:`segments`,type:`{ label: string; value: number; signal: SegmentTone }[]`,required:!0,description:`Сегменты слева направо. signal: ok, warn, err, info или ghost.`},{name:`max`,type:`number`,required:!0,description:`Верхняя граница. Остаток равен max минус сумма value.`},{name:`showRest`,type:`boolean`,defaultValue:`true`,description:`Остаток полосой со штриховкой.`},{name:`size`,type:`"sm" | "default" | "lg"`,defaultValue:`"sm"`,description:`Высота трека.`}]}]}),related:(0,l.jsx)(i,{links:[{href:`/components/spinner`,label:`Spinner`,description:`Ожидание без известного процента.`},{href:`/components/skeleton`,label:`Skeleton`,description:`Заготовка содержимого на время загрузки.`},{href:`/recipes/metric`,label:`MetricRecipe`,description:`Число с индикатором в карточке метрики.`}]}),children:[(0,l.jsx)(c,{id:`sizes`,label:`Размеры`,description:`Тонкая полоса для строки таблицы, обычная для карточки, крупная для отдельного показателя.`,children:(0,l.jsxs)(s,{layout:`stack`,code:`<Progress value={60} size="sm" aria-label="Покрытие в строке таблицы" />
+<Progress value={60} size="default" aria-label="Квота в карточке" />
+<Progress value={60} size="lg" aria-label="Ёмкость кластера" />`,children:[(0,l.jsx)(t,{value:60,size:`sm`,"aria-label":`Покрытие в строке таблицы`}),(0,l.jsx)(t,{value:60,size:`default`,"aria-label":`Квота в карточке`}),(0,l.jsx)(t,{value:60,size:`lg`,"aria-label":`Ёмкость кластера`})]})}),(0,l.jsx)(c,{id:`ticks`,label:`Деления`,description:`Когда показываешь ёмкость или заполненность: десять блоков по 10 %.`,children:(0,l.jsx)(s,{layout:`stack`,code:`<Progress value={70} variant="ticks" size="lg" signal="info" aria-label="Ёмкость" />`,children:(0,l.jsx)(t,{value:70,variant:`ticks`,size:`lg`,signal:`info`,"aria-label":`Ёмкость`})})}),(0,l.jsx)(c,{id:`overshoot`,label:`Превышение`,description:`Когда значение может выйти за предел, например квота. Часть сверх max всегда красная.`,children:(0,l.jsx)(s,{layout:`stack`,code:`<Progress value={120} max={100} signal="ok" aria-label="Квота: 120 из 100" />`,children:(0,l.jsx)(t,{value:120,max:100,signal:`ok`,"aria-label":`Квота: 120 из 100`})})}),(0,l.jsx)(c,{id:`segmented`,label:`Сегменты`,description:`Когда одна шкала делится на итоги проверки: прошли, нестабильны, упали. Остаток заштрихован.`,children:(0,l.jsxs)(s,{layout:`stack`,code:`<Progress.Segmented
+  max={34}
+  aria-label="Тесты сборки 1482"
+  segments={[
+    { label: "Прошли", value: 18, signal: "ok" },
+    { label: "Нестабильны", value: 7, signal: "warn" },
+    { label: "Упали", value: 2, signal: "err" },
+  ]}
+/>`,children:[(0,l.jsx)(t.Segmented,{max:34,"aria-label":`Тесты сборки 1482`,segments:[{label:`Прошли`,value:18,signal:`ok`},{label:`Нестабильны`,value:7,signal:`warn`},{label:`Упали`,value:2,signal:`err`}]}),(0,l.jsx)(t.Segmented,{max:100,size:`lg`,"aria-label":`Бюджет`,segments:[{label:`Потрачено`,value:64,signal:`ok`},{label:`Ожидает`,value:18,signal:`info`}]})]})})]})}export{d as default};

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-dBoqvwbd.js";import{F as t,Qt as n}from"./index-DnsCB0LC.js";var r=e();function i(){return(0,r.jsx)(t,{className:`h-full [&_[data-slot=docs-screen-tasks]]:h-full! [&_[data-slot=docs-screen-tasks]]:rounded-none! [&_[data-slot=docs-screen-tasks]]:border-0!`,children:(0,r.jsx)(n,{})})}export{i as default};
